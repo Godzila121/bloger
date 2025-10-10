@@ -1,47 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ $article->title }}</title>
-</head>
-<body>
-    <h1>{{ $article->title }}</h1>
-    <p><em>By {{ $article->user->name }} in {{ $article->topic->name }}</em></p>
-    <div>{!! $article->content !!}</div>
+@extends('layouts.app')
 
-    <hr>
+@section('title', $article->title)
 
-    <h3>Ratings</h3>
-    <p>Average rating: {{ $article->ratings->avg('score') }} / 5</p>
-    @auth
-    <form action="{{ route('ratings.store', $article) }}" method="POST">
-        @csrf
-        <select name="score">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-        </select>
-        <button type="submit">Rate</button>
-    </form>
-    @endauth
-
-    <hr>
-
-    <h3>Comments</h3>
-    @foreach($article->comments as $comment)
-        <div>
-            <p><strong>{{ $comment->user->name }}</strong></p>
-            <p>{{ $comment->content }}</p>
+@section('content')
+<section class="grid">
+    <main>
+        <div class="card">
+            <h1 style="font-size: 2.2rem; line-height: 1.2;">{{ $article->title }}</h1>
+            <p class="muted">Тема: {{ $article->topic->name }}</p>
+            <div style="margin-top: 2rem; font-size: 1.1rem; line-height: 1.6;">
+                {!! $article->content !!}
+            </div>
         </div>
-    @endforeach
+    </main>
+    <aside>
+        <div id="comments" class="card">
+            <h2 style="margin-top:0">Коментарі та рейтинг</h2>
+            <div style="margin-bottom:10px; display:flex; gap: 8px; align-items: center;">
+                <div style="font-weight:800">Рейтинг:</div>
+                <div class="muted">{{ number_format($article->ratings->avg('score'), 1) }} ★ ({{ $article->ratings->count() }} відгуків)</div>
+            </div>
 
-    @auth
-    <form action="{{ route('comments.store', $article) }}" method="POST">
-        @csrf
-        <textarea name="content" rows="5" required></textarea>
-        <button type="submit">Add comment</button>
-    </form>
-    @endauth
-</body>
-</html>
+            @forelse($article->comments as $comment)
+                <div class="comment">
+                    <div class="meta">
+                        <div><strong>{{ $comment->user->name }}</strong></div>
+                        <div>{{ $comment->created_at->diffForHumans() }}</div>
+                    </div>
+                    <div style="margin-top:8px">{{ $comment->content }}</div>
+                </div>
+            @empty
+                <p class="muted">Ще немає коментарів.</p>
+            @endforelse
+
+            @auth
+            <div style="margin-top:16px">
+                <h3>Залишити відгук</h3>
+                <form action="{{ route('comments.store', $article) }}" method="POST">
+                    @csrf
+                    <textarea name="content" placeholder="Ваш відгук" required></textarea>
+                    <button class="btn" type="submit" style="margin-top:8px">Надіслати</button>
+                </form>
+            </div>
+            @endauth
+        </div>
+    </aside>
+</section>
+@endsection

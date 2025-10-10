@@ -1,3 +1,124 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* --- Reset & basics --- */
+:root {
+    --bg: #f6fbff;
+    --card: #ffffff;
+    --accent: #0077c8;
+    --muted: #6b7280;
+    --glass: rgba(255, 255, 255, 0.6);
+    --radius: 16px;
+    --container: 1100px;
+}
+* { box-sizing: border-box }
+html, body { height: 100% }
+body {
+    margin: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, var(--bg), #eaf6ff 60%);
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.45;
+}
+.wrap { max-width: var(--container); margin: 32px auto; padding: 0 20px }
+a { color: var(--accent); text-decoration: none; }
+
+/* --- Header --- */
+header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px }
+.logo { display: flex; gap: 12px; align-items: center }
+.logo .mark {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), #00b4ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+}
+.nav { display: flex; gap: 14px; align-items: center }
+.nav a { color: var(--muted); text-decoration: none; font-weight: 600 }
+.cta { background: var(--accent); color: #fff; padding: 10px 16px; border-radius: 12px; text-decoration: none; font-weight: 700 }
+
+/* --- Hero --- */
+.hero { display: grid; grid-template-columns: 1fr 420px; gap: 28px; align-items: flex-start; margin-bottom: 28px }
+.hero-card { background: var(--card); border-radius: var(--radius); padding: 28px; box-shadow: 0 8px 30px rgba(2, 6, 23, 0.06) }
+.hero h1 { margin: 0 0 8px; font-size: 28px }
+.hero p { margin: 0 0 18px; color: var(--muted) }
+.features { display: flex; gap: 10px; flex-wrap: wrap }
+.feature { background: var(--glass); backdrop-filter: blur(6px); padding: 8px 12px; border-radius: 10px; font-weight: 600 }
+
+/* --- Content layout --- */
+.grid { display: grid; grid-template-columns: 2fr 1fr; gap: 22px; align-items: flex-start; }
+main { min-height: 200px }
+aside { position: sticky; top: 28px; height: fit-content }
+
+/* --- Guide list --- */
+.card { background: var(--card); border-radius: 14px; padding: 24px; margin-bottom: 16px; box-shadow: 0 6px 18px rgba(2, 6, 23, 0.04) }
+.lesson { display: flex; gap: 16px; align-items: center; }
+.lesson .thumb {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #aee1ff, #6fc6ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #003554;
+    font-size: 24px;
+}
+.lesson h3 { margin: 0; font-size: 18px }
+.lesson p { margin: 6px 0 0; color: var(--muted); font-size: 15px }
+
+/* --- Ratings & comments --- */
+.comment { padding: 16px; border-radius: 12px; background: linear-gradient(180deg, #fbfcff, #ffffff); margin-bottom: 12px; border: 1px solid #f0f6fc; }
+.comment .meta { font-size: 14px; color: var(--muted); display: flex; justify-content: space-between }
+
+/* --- Subscription & others --- */
+.plan { padding: 12px; border-radius: 12px; border: 1px solid #e8eef6 }
+.trainer { display: flex; gap: 12px; align-items: center }
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffe4b5, #ffc58a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+h1, h2, h3, h4 { margin: 0 0 1rem; font-weight: 800; }
+ul, li { list-style: none; padding: 0; }
+
+/* --- UI bits --- */
+.pill { padding: 6px 10px; border-radius: 999px; background: #eef7ff; font-weight: 700; color: var(--accent) }
+.muted { color: var(--muted) }
+.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    background: var(--accent);
+    color: #fff;
+}
+.btn-outline { border: 1px solid #d8e9fb; color: var(--accent); background: transparent }
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e6eef9;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: 1fr }
+    header, .nav { flex-direction: column; gap: 1rem; }
+}

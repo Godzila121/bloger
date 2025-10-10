@@ -1,36 +1,43 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<!doctype html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@yield('title', 'Плавання — Довідник та Тренування')</title>
+    <meta name="description" content="Довідник по плаванню: поради, тренування, рейтинги та коментарі." />
+    @vite('resources/css/app.css')
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <a href="{{ route('articles.index') }}" class="logo" style="text-decoration: none; color: inherit;">
+                <div class="mark">SW</div>
+                <div>
+                    <div style="font-weight:800">Плавання</div>
+                    <div class="muted" style="font-size:13px">Довідник • Тренування</div>
+                </div>
+            </a>
+            <nav class="nav">
+                <a href="{{ route('articles.index') }}">Довідник</a>
+                @auth
+                    <a href="#">{{ auth()->user()->name }}</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="cta" style="border:none; cursor:pointer;">Вийти</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}">Увійти</a>
+                    <a class="cta" href="{{ route('register') }}">Реєстрація</a>
+                @endauth
+            </nav>
+        </header>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        @yield('content')
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+        <footer>
+            © {{ date('Y') }} Плавання — Довідник.
+        </footer>
+    </div>
+    @stack('scripts')
+</body>
 </html>

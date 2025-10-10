@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Comment extends Model
+class Rating extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['article_id', 'user_id', 'content'];
+    protected $fillable = ['article_id', 'user_id', 'score'];
 
     public function user(): BelongsTo
     {

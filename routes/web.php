@@ -8,7 +8,7 @@ use App\Http\Controllers\SubscriptionController;
 
 // Головна сторінка
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('articles.index');
 });
 
 // Маршрути для довідника (статей)
@@ -23,7 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
     Route::post('/subscriptions', [SubscriptionController::class, 'store'])->name('subscriptions.store');
 });
-
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Вказуємо, що маршрут '/dashboard' повинен відображати view 'dashboard'
+    // Цей маршрут доступний лише для аутентифікованих користувачів
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+});
 // Підключення стандартних маршрутів для аутентифікації (вхід, реєстрація і т.д.)
 // Цей рядок важливий для роботи сторінок логіну та реєстрації.
 require __DIR__.'/auth.php';

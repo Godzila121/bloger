@@ -9,7 +9,7 @@
             <h1 style="font-size: 2.2rem; line-height: 1.2;">{{ $article->title }}</h1>
             <p class="muted">Тема: {{ $article->topic->name }}</p>
             <div style="margin-top: 2rem; font-size: 1.1rem; line-height: 1.6;">
-                {!! $article->content !!}
+                {{ $article->content }}
             </div>
         </div>
     </main>

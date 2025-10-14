@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
     Route::post('/subscriptions', [SubscriptionController::class, 'store'])->name('subscriptions.store');
+    Route::get('/subscriptions', [App\Http\Controllers\SubscriptionController::class, 'index'])->name('subscriptions.index');
+    Route::post('/subscriptions/create-payment', [App\Http\Controllers\SubscriptionController::class, 'createPayment'])->name('subscriptions.createPayment');
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     // Вказуємо, що маршрут '/dashboard' повинен відображати view 'dashboard'

@@ -12,29 +12,24 @@ class Article extends Model
     use HasFactory;
 
     protected $fillable = [
+        'title',
+        'content',
+        'image',
+        'is_premium',
         'user_id',
         'topic_id',
-        'title',
         'slug',
         'summary',
-        'content',
-        'cover_path',
-        'is_premium',
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function topic(): BelongsTo
     {
         return $this->belongsTo(Topic::class);
     }
 
-    public function comments(): HasMany
+    public function user(): BelongsTo
     {
-        return $this->hasMany(Comment::class);
+        return $this->belongsTo(User::class);
     }
 
     public function ratings(): HasMany
@@ -42,13 +37,9 @@ class Article extends Model
         return $this->hasMany(Rating::class);
     }
 
-    public function scopePremium($query)
+    // --- ОСЬ МЕТОД, ЯКОГО НЕ ВИСТАЧАЛО ---
+    public function comments(): HasMany
     {
-        return $query->where('is_premium', true);
-    }
-
-    public function scopeFree($query)
-    {
-        return $query->where('is_premium', false);
+        return $this->hasMany(Comment::class);
     }
 }
